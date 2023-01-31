@@ -21,17 +21,25 @@ public class UserDaoImpl implements UserDao {
     try {
       connection = mysql.getConnection();
       mysql.query(connection, "USE learnSQL");
-      String sql = "INSERT INTO user(id, name, email, roleId) values (?, ?, ?, ?)";
-      preparedStatement = connection.prepareStatement(sql);
-      preparedStatement.setInt(1, userDto.getId());
-      preparedStatement.setString(2, userDto.getName());
-      preparedStatement.setString(3, userDto.getEmail());
-      if(userDto.getRoleId() == null) {
-        preparedStatement.setNull(4, Types.INTEGER);
-      }else {
-        preparedStatement.setInt(4, userDto.getRoleId());
-      }
 
+      if (userDto.getRoleId() == null) {  // Part2_Test를 위한 분기, roleId가 존재하지 않을 경우 보낼 쿼리 처리
+        String sql = "INSERT INTO user(id, name, email) values (?, ?, ?)";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userDto.getId());
+        preparedStatement.setString(2, userDto.getName());
+        preparedStatement.setString(3, userDto.getEmail());
+      } else {                            // Part3_Test를 위한 분기, roleId가 존재하지 않을 경우 보낼 쿼리 처리
+        String sql = "INSERT INTO user(id, name, email, roleId) values (?, ?, ?, ?)";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, userDto.getId());
+        preparedStatement.setString(2, userDto.getName());
+        preparedStatement.setString(3, userDto.getEmail());
+        if(userDto.getRoleId() == null) {
+          preparedStatement.setNull(4, Types.NULL);
+        }else {
+          preparedStatement.setInt(4, userDto.getRoleId());
+        }
+      }
       response = preparedStatement.executeUpdate();
       preparedStatement.close();
     } finally {
