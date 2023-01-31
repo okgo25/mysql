@@ -1,5 +1,5 @@
 -- 여기 user 테이블 생성 SQL 구문이 있습니다. user 테이블을 참고해서, content 테이블 생성 SQL 구문을 완성하세요.
-
+-- 테이블을 생성하는 코드를 제외한 주석은 모두 지워주셔야 정상적인 테스트 진행이 가능합니다. PART 1을 진행할때도 하단의 주석된 코드는 미리 지우고 테스트를 실행해주세요.
 CREATE TABLE `user` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255) not NULL,
